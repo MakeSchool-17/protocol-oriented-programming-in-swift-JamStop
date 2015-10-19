@@ -32,52 +32,81 @@ typealias KilometersPerHour = Double
 typealias Kilometers = Double
 typealias Hours = Double
 
-class Vehicle {
-  
-  var speed: KilometersPerHour = 0
-  
-  func travelDuration(distance: Kilometers) -> Hours {
-    return distance / speed
-  }
+protocol Vehicle {
+    var speed: KilometersPerHour {get set}
+    func travelDuration(distance: Kilometers)
+}
+
+extension Vehicle {
+    var speed: KilometersPerHour {return 10}
+//    var amountOfWindows
+    func travelDuration(distance: Kilometers) -> Hours {return distance / speed}
+}
+
+extension Vehicle where Self: GroundVehicle {
+    var speed: KilometersPerHour {return 30}
+}
+
+extension Vehicle where Self: Vessel {
+    var speed: KilometersPerHour {return 60}
+}
+
+protocol GroundVehicle {
+    var amountOfWindows: Int {get set}
+}
+
+protocol Vessel {
+    var amountOfWindows: Int{get set}
+}
+
+//class Vehicle {
+//  
+//  var speed: KilometersPerHour = 0
+//  
+//  func travelDuration(distance: Kilometers) -> Hours {
+//    return distance / speed
+//  }
+//  
+//}
+//
+//
+//class GroundVehicle: Vehicle {
+//  
+//  var wheels: Int = 0
+//  
+//}
+
+class Car: Vehicle, GroundVehicle {
+    var speed: KilometersPerHour = 0.0
+    var amountOfWindows: Int = 0
   
 }
 
-class GroundVehicle: Vehicle {
-  
-  var wheels: Int = 0
-  
+class MotorCycle: Vehicle, GroundVehicle {
+    var speed: KilometersPerHour = 0.0
+    var amountOfWindows: Int = 0
 }
 
-class Car: GroundVehicle {
+class Bus: Vehicle, GroundVehicle {
+    var speed: KilometersPerHour = 0.0
+    var amountOfWindows: Int = 0
+    var capacity: Int = 0
+
+}
+
+//class Vessel: Vehicle {
+//  
+//  var length: Int = 0
+//  
+//}
+//
+class Boat: Vehicle, Vessel {
   
   var amountOfWindows: Int = 0
   
 }
-
-class MotorCycle: GroundVehicle {
-  
-}
-
-class Bus: GroundVehicle {
-  
-  var capacity: Int = 0
-  var amountOfWindows: Int = 0
-
-}
-
-class Vessel: Vehicle {
-  
-  var length: Int = 0
-  
-}
-
-class Boat: Vessel {
-  
-  var amountOfWindows: Int = 0
-  
-}
-
-class ContainerShip: Vessel {
+//
+class ContainerShip: Vehicle, Vessel {
   
 }
 
